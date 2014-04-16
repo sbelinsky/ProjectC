@@ -11,7 +11,7 @@ public class Word extends JButton implements MouseListener {
 	String note;
 	boolean displayed;
 	
-	public Word(String ttext, String tdefinition, String tnote) {
+	public Word(String ttext) {
 		super();
 		
 		
@@ -21,8 +21,8 @@ public class Word extends JButton implements MouseListener {
 		setBorder(null);
 		setBorderPainted(false);
 		 text = ttext;
-		definition = tdefinition;
-		 note = tnote;
+		definition = "";
+		 note = "";
 		 displayed = false;
 
 

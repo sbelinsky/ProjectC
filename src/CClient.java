@@ -2,6 +2,7 @@ import javax.swing.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,6 +15,11 @@ import java.util.ArrayList;
 // create string splitting function 
 // create button creating function
 //create ifSelected function for Word
+
+
+//For paul:
+//Didnt finish the functionality component, but I am very close. I have my data seperated and stored into arrays, aswell as my dicttionary excel file set up / readable.
+// I just need to correct on variable scope issue to pass the correct refrences.
 public class CClient {
 
 	JFrame frame;
@@ -57,7 +63,6 @@ public class CClient {
 	private void switchInPanel(JPanel panel) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(panel);
-		System.out.println("hit");
 		frame.setSize(1000, 600);
 		frame.pack();
 	}
@@ -82,8 +87,11 @@ public class CClient {
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
-					// go to chapter
+					//createPage(masterList, 1);
+					// get panel from create page, then switch it into frame
+				//	switchInPanel();
 				}
+
 			});
 			btnNewButton.setBounds(327, 347, 117, 29);
 			add(btnNewButton);
@@ -112,29 +120,25 @@ public class CClient {
 		}
 	}
 
-	
-
-	void openContentFile(File file) {
-		ArrayList<String> stringList = new ArrayList<String>();
-		String stringArray[];
+	ArrayList<String[]> openContentFile(File file) {
+		ArrayList<String> lineList = new ArrayList<String>();
+		ArrayList<String[]> masterList = new ArrayList<String[]>();
 		BufferedReader br = null;
-		String line = "";
+		String line = " ";
 		try {
 
 			br = new BufferedReader(new FileReader(file));
 			while ((line = br.readLine()) != null) {
-				// use space as separator
-				// line.split("[");
-				stringList.add(line);
-				// System.out.println(line);
-				//test github comment
+				lineList.add(line);
+
 			}
 
-			for (int i = 0; i < stringList.size(); i++) {
-				//split into words
-				//testgithub
-				String[] wordArray = stringList.get(i).split(" ");
-				System.out.println(stringList.get(i));
+			for (int i = 0; i < lineList.size(); i++) {
+
+				String[] tempArray = lineList.get(i).split(" ");
+
+				masterList.add(tempArray);
+
 			}
 
 		} catch (IOException e) {
@@ -151,11 +155,12 @@ public class CClient {
 			// inventoryList = items;
 			// System.out.println(inventoryList);
 		}
+		return masterList;
 
 	}
 
 	void openWordFile(File file) {
-		ArrayList<Word> wordList = new ArrayList<Word>();
+		ArrayList<Word> dictionaryList = new ArrayList<Word>();
 		BufferedReader br = null;
 		String line = "";
 		try {
@@ -174,9 +179,9 @@ public class CClient {
 
 					Word word = null;
 
-					word = new Word(text, definition, note);
+					word = new Word(text);
 
-					wordList.add(word);
+					dictionaryList.add(word);
 
 				}
 			}
@@ -195,6 +200,26 @@ public class CClient {
 			// inventoryList = items;
 			// System.out.println(inventoryList);
 		}
+	}
+
+	JPanel createPage(ArrayList nlist, int nn) {
+
+		JPanel panel;
+		panel = new JPanel();
+		FlowLayout layout = new FlowLayout();
+		panel.setLayout(layout);
+		int n = nn;
+		ArrayList list = nlist;
+
+		//tempArray = list.get(n);
+
+	//	for (int i = 0; i < tempArray.size(); i++) {
+	//		word = new Word(tempArray.get(i));
+		//	panel.add(word);
+	//	}
+
+		return panel;
+
 	}
 
 	private class CHelp extends JPanel {
