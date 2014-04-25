@@ -2,24 +2,20 @@ import javax.swing.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-//create flowlayout pages for text
-//create strings for each page
-// create string splitting function 
-// create button creating function
-//create ifSelected function for Word
 
 
-//For paul:
-//Didnt finish the functionality component, but I am very close. I have my data seperated and stored into arrays, aswell as my dicttionary excel file set up / readable.
-// I just need to correct on variable scope issue to pass the correct refrences.
+
+
 public class CClient {
 
 	JFrame frame;
@@ -41,15 +37,15 @@ public class CClient {
 	}
 
 	public void buildGUI() {
-		wordListFile = new File("CWordList.csv");
-		openWordFile(wordListFile);
+		
 
-		contentStringFile = new File("rawtext.txt");
-		openContentFile(contentStringFile);
+		
 
 		help = new CHelp();
 
 		splash = new CSplash();
+		
+		
 
 		frame = new JFrame("Cicero Dictionary 01");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,10 +82,13 @@ public class CClient {
 			JButton btnNewButton = new JButton("Go!");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-
-					//createPage(masterList, 1);
-					// get panel from create page, then switch it into frame
-				//	switchInPanel();
+					JPanel createdPanel;
+					contentStringFile = new File("rawtext.txt");
+					ArrayList masterList = openContentFile(contentStringFile);
+					createdPanel = createPage(masterList,Integer.parseInt(textField.getText()));
+					switchInPanel(createdPanel);
+					
+					
 				}
 
 			});
@@ -159,7 +158,7 @@ public class CClient {
 
 	}
 
-	void openWordFile(File file) {
+	ArrayList<Word> openWordFile(File file) {
 		ArrayList<Word> dictionaryList = new ArrayList<Word>();
 		BufferedReader br = null;
 		String line = "";
@@ -171,19 +170,10 @@ public class CClient {
 				// Ignore First Line. . .
 
 				// text, definiton, note
-				if (!libraryItem[0].equals("Word")) {
 
-					String text = libraryItem[0];
-					String definition = libraryItem[1];
-					String note = libraryItem[2];
+					
 
-					Word word = null;
-
-					word = new Word(text);
-
-					dictionaryList.add(word);
-
-				}
+				
 			}
 
 		} catch (IOException e) {
@@ -197,27 +187,32 @@ public class CClient {
 					e.printStackTrace();
 				}
 			}
-			// inventoryList = items;
-			// System.out.println(inventoryList);
 		}
+		return dictionaryList;
 	}
 
 	JPanel createPage(ArrayList nlist, int nn) {
-
+		String[] tempArray;
 		JPanel panel;
+		Word word;
 		panel = new JPanel();
-		FlowLayout layout = new FlowLayout();
+		GridLayout layout = new GridLayout(10,100);
 		panel.setLayout(layout);
 		int n = nn;
-		ArrayList list = nlist;
-
-		//tempArray = list.get(n);
-
-	//	for (int i = 0; i < tempArray.size(); i++) {
-	//		word = new Word(tempArray.get(i));
-		//	panel.add(word);
-	//	}
-
+		ArrayList<String[]> list = nlist;
+		panel.setBackground(Color.WHITE);
+		tempArray = list.get(n);
+		
+		for (int i =0; i < tempArray.length; i++){
+			if(tempArray[i]!=" ");
+			word = new Word(tempArray[i]);
+			word.setText(tempArray[i]);
+			
+			panel.add(word);
+			
+		}
+		
+		
 		return panel;
 
 	}
