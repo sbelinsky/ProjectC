@@ -85,7 +85,7 @@ public class CClient {
 					JPanel createdPanel;
 					contentStringFile = new File("rawtext.txt");
 					ArrayList masterList = openContentFile(contentStringFile);
-					createdPanel = createPage(masterList,Integer.parseInt(textField.getText()));
+					createdPanel = createPage(masterList,( Integer.parseInt(textField.getText())- 1));
 					switchInPanel(createdPanel);
 					
 					
